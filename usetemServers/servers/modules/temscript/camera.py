@@ -4,6 +4,8 @@ from comtypes.safearray import safearray_as_ndarray
 import numpy as np
 import logging
 
+#logging.basicConfig(filename='example.log',level=logging.DEBUG)
+
 class Camera():
 
     _instrument = None
@@ -13,6 +15,10 @@ class Camera():
         self._camera = instrument.Camera
 
     def mainScreenPosition(self, value=None):
+
+        prior = self._camera.MainScreen
+
+        logging.info(f'screen was {prior} and is going to {value}')
 
         if value is None:
             return self._camera.MainScreen
