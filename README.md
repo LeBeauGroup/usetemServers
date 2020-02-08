@@ -5,7 +5,7 @@ USETEMServers provide xml-rpc based access to control various compontents of the
 This server platform is agnostic to the type of interface, and therefore could be created independent of the OEMs.
 
 
-## USETEM Install
+## Install
 
 ### Packages
 
