@@ -3,15 +3,17 @@ from .stemDetectors import STEMDetectors
 from .enums import *
 from comtypes.safearray import safearray_as_ndarray
 import numpy as np
-
+import logging
 class Illumination():
 
     _instrument = None
 
 
-    def __init__(self, instrument):
+    def __init__(self, instrument,parent=None):
         self._instrument = instrument
         self._illum = instrument.Illumination
+        self._iom3 = instrument.iom3
+        self._parent = parent
 
     def rotationCenter(self):
 
@@ -100,7 +102,7 @@ class Illumination():
                 value = float(value)
             self._illum.StemMagnification = value
 
-    def tilt(self):
+    def tilt(self,value=None):
         if value is None:
             return self._illum.Tilt
         else:
@@ -120,14 +122,30 @@ class Illumination():
         else:
             self._illum.IlluminatedArea = value
 
-    def probeDefocus(self):
+    def probeDefocus(self, value=None):
         """
-        Not clear this is actually doing anything
+        Probe mode only, not in STEM
+        """
 
-        Probably use projection.defocus instead (objective lens)
+        if value is None:
+            return self._illum.ProbeDefocus
+        else:
+            self._illum.ProbeDefocus = value
+
+    def STEMDefocus(self,value=None, lens=None):
+        """
 
         """
-        return self._illum.ProbeDefocus
+
+       # logging.info('Product Family'+str(self._parent.configInfo('ProductFamily')))
+
+
+        if self._parent.configInfo('ProductFamily') == 1: # Titan Product Family
+            if value is None:
+                return self._iom3.Column.Optics.StemFocus.GetObjectiveDefocus()
+            else:
+                self._iom3.Column.Optics.StemFocus.SetObjectiveDefocus(value)
+
 
 
     def convergenceAngle(self):
