@@ -1,5 +1,5 @@
 
-from comtypes.client import CreateObject, Constants
+from comtypes.client import CreateObject, Constants,GetModule
 try:
     from comtypes.gen import TEMScripting
 except:
@@ -9,7 +9,7 @@ except:
 try:
     from comtypes.gen.IOMLib import _99A162A6_3022_4B64_88C3_A62A6BE22239_0_1_0 as IOMLib
 except:
-    CreateObject('{99A162A6-3022-4B64-88C3-A62A6BE22239}')
+    GetModule(['{99A162A6-3022-4B64-88C3-A62A6BE22239}',1,0])
     from comtypes.gen.IOMLib import _99A162A6_3022_4B64_88C3_A62A6BE22239_0_1_0 as IOMLib
 
 
