@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/useTEM.iml" filepath="$PROJECT_DIR$/.idea/useTEM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../useTEM/.idea/useTEM.iml" filepath="$PROJECT_DIR$/../useTEM/.idea/useTEM.iml" />
       <module fileurl="file://$PROJECT_DIR$/../usetem-workflow/usetemWorkflow/.idea/usetemWorkflow.iml" filepath="$PROJECT_DIR$/../usetem-workflow/usetemWorkflow/.idea/usetemWorkflow.iml" />
     </modules>
   </component>
