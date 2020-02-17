@@ -4,7 +4,15 @@ from .enums import *
 from comtypes.safearray import safearray_as_ndarray
 import numpy as np
 import logging
+try:
+    from comtypes.gen.IOMLib import _99A162A6_3022_4B64_88C3_A62A6BE22239_0_1_0 as IOMLib
+except:
+    GetModule(['{99A162A6-3022-4B64-88C3-A62A6BE22239}',1,0])
+    from comtypes.gen.IOMLib import _99A162A6_3022_4B64_88C3_A62A6BE22239_0_1_0 as IOMLib
+
 class Illumination():
+
+
 
     _instrument = None
 
@@ -140,11 +148,20 @@ class Illumination():
        # logging.info('Product Family'+str(self._parent.configInfo('ProductFamily')))
 
 
-        if self._parent.configInfo('ProductFamily') == 1: # Titan Product Family
+        if self._parent.configInfo('ProductFamily') == IOMLib.enProductFamily_Titan: # Titan Product Family
             if value is None:
                 return self._iom3.Column.Optics.StemFocus.GetObjectiveDefocus()
             else:
                 self._iom3.Column.Optics.StemFocus.SetObjectiveDefocus(value)
+        elif self._parent.configInfo('ProductFamily') == IOMLib.enProductFamily_Talos:
+
+            if value is None:
+                return self._iom3.Column.Optics.StemFocus.GetObjectiveDefocus()
+            else:
+                self._iom3.Column.Optics.StemFocus.SetObjectiveDefocus(value)
+
+
+
 
 
 
