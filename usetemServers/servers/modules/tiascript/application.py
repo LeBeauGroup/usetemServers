@@ -44,7 +44,6 @@ class Application():
     app = CreateObject("ESVision.Application")
 
     imageDisplay = ImageDisplay(app)
-
     acquisitionManager = AcquisitionManager(app)
     scanningServer = ScanningServer(app)
     beamControl = BeamControl(app)

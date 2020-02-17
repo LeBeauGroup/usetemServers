@@ -3,6 +3,7 @@ from .enums import *
 from .application import *
 
 
+
 logging.basicConfig(level=logging.INFO)
 
 class AcquisitionServer():
@@ -179,18 +180,160 @@ class ScanningServer(ImageServer):
 
 class ParallelImageServer(AcquisitionServer):
 
-    def Camera(self):
-        pass
+    def __init__(self,app):
+            self.app = app
+            self.server = app.CCDServer()
+
+    def camera(self, value=None):
+        '''
+        :param value: camera name to set
+        :return: camera name if value is none
+        '''
+        if value is None:
+            return self.server.Camera
+
+        else:
+            self.server.Camera = value
+
+
+    def cameraInserted(self, value=None):
+        '''
+        :param value: set insertion state of camera
+        :return: camera insertion state
+        '''
+        if value is None:
+            return self.server.CameraInserted
+
+        else:
+            self.server.CameraInserted = value
+
+    def cameraNames(self):
+
+
+        names = self.server.CameraNames()
+
+        namesList = list()
+        for name in names:
+            namesList.append(name)
+
+        return namesList
+
+    def totalReadoutRange(self):
+
+        range = self.server.GetTotalReadoutRange()
+
+        return (range.StartX, range.StartY, range.EndX, range.EndY)
+
+    def totalPixelReadoutRange(self):
+
+        range = self.server.GetTotalPixelReadoutRange()
+
+        return (range.StartX, range.StartY, range.EndX, range.EndY)
+
+    def integrationTimeRange(self):
+
+        range = self.server.GetIntegrationTimeRange()
+        return (range.Start, range.End)
+
+    def hasBiasImage(self):
+
+        return self.server.HasBiasImage()
+
+    def hasGainImage(self):
+
+        return self.server.HasGainImage()
+
+    def integrationTime(self, value=None):
+        '''
+        :param value: set integration time for acquistion
+        :return: current integration time for acquisition
+        '''
+        if value is None:
+            return self.server.IntegrationTime
+
+        else:
+            self.server.IntegrationTime = value
+
+    def isCameraRetractable(self):
+        return self.server.isCameraRetractable()
+
+
+    def pixelReadoutRange(self, value=None):
+        '''
+        :param value: set pixelReadoutRange for acquistion
+        :return: current pixelReadoutRange for acquisition
+        '''
+        if value is None:
+
+            range =self.server.pixelReadoutRange
+            return (range.StartX, range.StartY, range.EndX, range.EndY)
+
+        else:
+
+            newRange = self.app.Range2D(value[0],value[1],value[2],value[3])
+            self.server.pixelReadoutRange = newRange
+
+
+    def readoutRange(self, value=None):
+        '''
+        :param value: set readoutRange for acquistion
+        :return: current readoutRange  for acquisition
+        '''
+        if value is None:
+            range =self.server.readoutRange
+            return (range.StartX, range.StartY, range.EndX, range.EndY)
+
+        else:
+            newRange = self.app.Range2D(value[0],value[1],value[2],value[3])
+            self.server.readoutRange = newRange
 
 
 class CcdServer(ParallelImageServer):
 
-    def __init__(self,app):
-        self.app = app
-        self.acqserver = app.CcdServer()
+ #   def __init__(self,app):
+  #      super(CcdServer, self).__init__()
 
-    def Binning(self):
-        self.acqserver.Binning = 2
+
+    def binning(self, value=None):
+        if value is None:
+            return self.server.binning
+
+        else:
+            self.server.readoutRange = value
+
+    def binningValues(self):
+        binValues = self.server.binningValues()
+
+        bins = list()
+        for bin in binValues:
+            bins.append(bin)
+
+        return bins
+
+    def readoutRate(self,value=None):
+        if value is None:
+            return self.server.ReadoutRate
+
+        else:
+            self.server.ReadoutRate = value
+
+    def readoutRates(self):
+        readoutRates = self.server.readoutRates()
+
+        rates = list()
+        for rate in readoutRates:
+            rates.append(rate)
+
+        return rates
+
+    def setGainImage(self, image, binning):
+        '''
+        implementation needed
+        :param image: data array
+        :param binning: int
+        :return:
+        '''
+        pass
 
 
 class EmpadServer(ScanningServer):
