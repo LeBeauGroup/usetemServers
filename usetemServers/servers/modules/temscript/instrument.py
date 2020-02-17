@@ -70,9 +70,17 @@ class Instrument():
         self.vacuum = Vacuum(instrument)
         self.buttons = instrument.UserButtons
 
-        buildVersion = self.configInfo('BuildVersion')
+        if self.configInfo("ProductFamily") == IOMLib.enProductFamily_Titan:
+            product = 'Titan'
+        elif self.configInfo("ProductFamily") == IOMLib.enProductFamily_Talos:
+            product = 'Talos'
+        elif self.configInfo("ProductFamily") == IOMLib.enProductFamily_Tecnai:
+            product = 'Tecnai'
 
-        logging.info(f'Build Version: {buildVersion}')
+        else:
+            product = 'Unknown'
+
+        logging.info(f'Family: {product}, Software Version: {self.configInfo("BuildVersion")}')
 
     def isSTEMAvailable(self):
         return self.instrument.InstrumentModeControl.StemAvailable
