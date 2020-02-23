@@ -35,7 +35,7 @@ class RequestHandler(SimpleXMLRPCRequestHandler):
 
 if __name__ == "__main__":
 
-    ip = get_Host_name_IP()
+    ip = '0.0.0.0'
     port = 8001
 
     with SimpleXMLRPCServer((ip,port),
