@@ -36,7 +36,10 @@ class RequestHandler(SimpleXMLRPCRequestHandler):
 
 if __name__ == "__main__":
 
-    with SimpleXMLRPCServer(('127.0.0.1', 8002),
+    ip = get_Host_name_IP()
+    port = 8002
+
+    with SimpleXMLRPCServer((ip, 8002),
                             requestHandler=RequestHandler, allow_none=True) as server:
         server.register_introspection_functions()
 
@@ -44,7 +47,7 @@ if __name__ == "__main__":
         server.register_multicall_functions()
         server.allow_none = True
 
-        logging.info('Server registered')
+        logging.info(f'TIA server registered on {ip}:{port}')
         logging.info('Use Control-C to exit')
 
         # Run the server's main loop
