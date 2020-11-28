@@ -37,7 +37,7 @@ class Instrument():
             self.instrument = instrument
 
         except Exception as e:
-            logging.info('Could not create instrument')
+            logging.info('Could not create Scripting instrument')
             logging.info(e)
 
         try:
@@ -63,6 +63,7 @@ class Instrument():
         self.autoloader = AutoLoader(instrument)
         self.camera = Camera(instrument)
         self.gun = Gun(instrument)
+        
         self.illumination = Illumination(instrument,parent=self)
         self.projection = Projection(instrument)
         self.stage = Stage(instrument)

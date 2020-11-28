@@ -11,11 +11,11 @@ class InstrumentModeControl():
         self._instModeControl = instrument.InstrumentModeControl
 
     def stemAvailable(self):
-		return self. _instModeControl.StemAvailable
+	    return self._instModeControl.StemAvailable
 
-	def instrumentMode(self, *argmode):
+    def instrumentMode(self, *argmode):
 
-		try:
-			return self._instModeControl.InstrumentMode(*argmode)
-		except:
-			print('could not check or change the mode')
+	    try:
+		    return self._instModeControl.InstrumentMode(*argmode)
+	    except:
+		    print('could not check or change the mode')

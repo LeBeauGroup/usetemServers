@@ -47,7 +47,7 @@ if __name__ == "__main__":
         server.register_multicall_functions()
         server.allow_none = True
 
-        logging.info(f'TIA server registered on {ip}:{port}')
+        logging.info(f'TIA server registered on {get_Host_name_IP()}:{port}')
         logging.info('Use Control-C to exit')
 
         # Run the server's main loop

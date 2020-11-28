@@ -1,15 +1,15 @@
 from setuptools import setup, find_packages
 import os
 
-def package_files(directory):
-    paths = []
-    for (path, directories, filenames) in os.walk(directory):
-        for filename in filenames:
-            paths.append(os.path.join('..', path, filename))
-    return paths
-
-extensions = package_files('useTEM/extensions')
-servers = package_files('useTEM/servers')
+# def package_files(directory):
+#     paths = []
+#     for (path, directories, filenames) in os.walk(directory):
+#         for filename in filenames:
+#             paths.append(os.path.join('..', path, filename))
+#     return paths
+#
+# extensions = package_files('useTEM/extensions')
+# servers = package_files('useTEM/servers')
 
 files = ['*', '*/*', '*/*/*']
 
@@ -37,5 +37,6 @@ setup(
     description='Universal Scripting Engine for TEM, a framework and gui to simplify scripting for the transmission electron microscope.',
     # We will also need a readme eventually (there will be a warning)
     long_description=open('README.md').read(),
+    zip_safe=False
 
 )

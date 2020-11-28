@@ -1,6 +1,7 @@
 from comtypes.gen import TEMScripting
 from .stemDetectors import STEMDetectors
 from .enums import *
+from comtypes import CoCreateInstance
 from comtypes.safearray import safearray_as_ndarray
 import numpy as np
 import logging
@@ -12,10 +13,7 @@ except:
 
 class Illumination():
 
-
-
     _instrument = None
-
 
     def __init__(self, instrument,parent=None):
         self._instrument = instrument
@@ -89,10 +87,31 @@ class Illumination():
         elif type(value) is bool:
             self._illum.IntensityLimitEnabled = value
 
-    def shift(self):
+    def beamShift(self, value=None, raw=False):
+        defl = self._iom3.Column.Optics.Deflectors
+        beam = defl[IOMLib.enDeflector_BeamDcDeflector].QueryInterface(IOMLib.IBeamDcDeflector)
+
+        if raw:
+            shift = beam.rawshift
+        else:
+            shift = beam.shift
+
+        if value is None:
+            return (shift.x, shift.y)
+        else:
+            shift.x = value[0]
+            shift.y = value[1]
+            if raw:
+                beam.rawshift = shift
+            else:
+                beam.shift = shift
+
+
+    def imageShift(self):
         if value is None:
             return self._illum.Shift
         else:
+            print(self._illum.Shift)
             self._illum.Shift = vector(self._instrument, value)
 
     def stemRotation(self, value=None):
