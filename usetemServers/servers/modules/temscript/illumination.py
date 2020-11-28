@@ -87,9 +87,25 @@ class Illumination():
         elif type(value) is bool:
             self._illum.IntensityLimitEnabled = value
 
-    def beamShift(self, value=None, raw=False):
+    def beamShift(self, value=None, raw=False, calibration=False):
         defl = self._iom3.Column.Optics.Deflectors
         beam = defl[IOMLib.enDeflector_BeamDcDeflector].QueryInterface(IOMLib.IBeamDcDeflector)
+
+        if calibration:
+            origShift =  beam.rawshift
+            newShift = beam.rawshift
+
+            newShift.x = value[0]
+            newShift.y = value[1]
+
+            beam.rawshift = newShift
+
+            rawShift = beam.rawshift
+            calShift = beam.shift
+
+            beam.rawshift = origShift
+
+            return (calShift.x / rawShift.x, calShift.y / rawShift.y)
 
         if raw:
             shift = beam.rawshift
