@@ -1,7 +1,7 @@
 from comtypes.client import CreateObject, Constants
 #from comtypes.gen import ESVision as
 
-from modules.tiascript.application import Application
+from .modules.tiascript.application import Application
 
 import logging
 from xmlrpc.server import SimpleXMLRPCServer

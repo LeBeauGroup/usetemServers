@@ -1,5 +1,5 @@
 
-from modules.temscript.instrument import Instrument
+from .modules.temscript.instrument import Instrument
 import logging
 from xmlrpc.server import SimpleXMLRPCServer
 from xmlrpc.server import SimpleXMLRPCRequestHandler
